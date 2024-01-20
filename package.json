@@ -1,0 +1,21 @@
+{
+  "name": "bfe_contact_app",
+  "version": "1.0.0",
+  "description": "A contact application by BFE",
+  "type": "module",
+  "main": "server.js",
+  "author": "Lamodot",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.2",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
