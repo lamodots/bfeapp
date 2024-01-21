@@ -72,14 +72,12 @@ export const upDateContactByIdController = async (req, res) => {
       return res.status(404).json({ message: "Send all required fields" });
     }
 
-    const findContact = await getContactByIdService(req.params.id);
-    if (!findContact) {
+    const updatedContact = await updateContactService(req.params.id, req.body);
+    if (!updatedContact) {
       return res
         .status(404)
         .json({ message: "Contact with such ID to not exists" });
     }
-
-    const updatedContact = await updateContactService(req.params.id, req.body);
     return res
       .status(200)
       .json({ message: "Contact updated sucessfully!", data: updatedContact });

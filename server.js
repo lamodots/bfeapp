@@ -16,6 +16,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/contacts", contactRoute);
+
 mongoose
   .connect(MONGODBURL)
   .then(() => {
