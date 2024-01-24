@@ -1,10 +1,11 @@
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 import mongoose from "mongoose";
 import { contactRoute } from "./routes/contactRoute.js";
+import { userRoute } from "./routes/userRoute.js";
+dotenv.config();
 
 const app = express();
-dotenv.config({ path: "./configs/.env" });
 
 const PORT = process.env.PORT_NO;
 const MONGODBURL = process.env.MONGODB_URL;
@@ -16,6 +17,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/contacts", contactRoute);
+app.use("/users", userRoute);
 
 mongoose
   .connect(MONGODBURL)
