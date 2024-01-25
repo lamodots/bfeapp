@@ -8,7 +8,7 @@ import { loginUserController } from "../middlewares/auth.js";
 
 export const userRoute = express.Router();
 
-userRoute.post("/create", createUserController);
+userRoute.post("/create",  createUserController);
 userRoute.get("/", getAllUserController);
 userRoute.get("/user/:id", getUserByIdController);
 userRoute.post("/login", loginUserController);

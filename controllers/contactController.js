@@ -16,13 +16,16 @@ export const createContactController = async (req, res) => {
     ) {
       return res.status(400).json({ message: "All fields requires" });
     }
-
+/*
+    We need to have the user id in each of the created contact we we can retrive the contacts each user created.
+*/
     const newContact = {
       firstname: req.body.firstname,
       middlename: req.body.middlename,
       surname: req.body.surname,
       company: req.body.company,
       phoneNo: req.body.phoneNo,
+    
     };
     const newContactInfo = await CreateContactService(newContact);
     return res
@@ -35,8 +38,10 @@ export const createContactController = async (req, res) => {
 };
 
 export const getContactController = async (req, res) => {
+  const id = req.payload.id
+
   try {
-    const contacts = await getAllContactsService();
+    const contacts = await getAllContactsService(id);
     return res
       .status(200)
       .json({ message: "Contacts retrived successfully!", data: contacts });
@@ -46,6 +51,7 @@ export const getContactController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res) => {
+ 
   try {
     const contact = await getContactByIdService(req.params.id);
     return res

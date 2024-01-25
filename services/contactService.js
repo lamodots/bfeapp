@@ -5,8 +5,9 @@ export const CreateContactService = async (body) => {
   return contact;
 };
 
-export const getAllContactsService = async () => {
-  const contacts = await ContactModel.find({});
+export const getAllContactsService = async (id) => {
+  console.log(id)
+  const contacts = await ContactModel.find({user:id});
   return contacts;
 };
 

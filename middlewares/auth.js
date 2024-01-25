@@ -13,7 +13,7 @@ export const loginUserController = async (req, res) => {
   }
   try {
     const user = await getUserByEmailService(req.body.email);
-    console.log("my details" + user.email, user.password);
+    console.log("my details" + " " +  user.email, user.password, user._id);
     if (!user) {
       return res.status(404).json({ message: "User with email not found!" });
     }
@@ -25,38 +25,46 @@ export const loginUserController = async (req, res) => {
       return res.status(404).json({ message: "Password is Incorrect!" });
     }
 
-    // const payload = {
-    //   id: user._id,
-    //   email: user.email,
-    // };
+    const payload = {
+      id: user._id,
+      email: user.email,
+    };
 
-    // const token = generateToken(user._id);
+    const token = generateToken(payload);
 
-    res.status(200).json({ messsage: "Logged in sucessfully" });
+    res.status(200).json({ messsage: "Logged in sucessfully", data: {
+      email: user.email,
+      id: user._id,
+      token: token
+    } });
   } catch (error) {
     res.status(500).json({ message: error.messsage });
   }
 };
 
 export const isLoggedInController = async (req, res, next) => {
-  const authHeader = req.header.authorization;
+  const authHeader = req.headers.authorization;
+
   if (!authHeader) {
-    return next("Authorization header is required !");
+    return res.status(404).json({message: "Authorization headers is required !"});
   }
 
   const bearerTokken = authHeader.split(" ")[1];
   if (!bearerTokken) {
-    return next("Token is required");
+    return res.status(404).json({message: "Token is required"});
   }
   try {
     const payload = verifyToken(bearerTokken);
+
     if (!payload) {
-      return next("You need to login to access this route !");
+      return res.statu(404).json({message:"You need to login to access this route !"});
     }
+
+
 
     req.payload = payload;
     next();
   } catch (error) {
-    next(error.messsage);
+    return res.status(500).json({message:error.message});
   }
 };

@@ -1,3 +1,4 @@
+
 import { generateToken } from "../services/authservice.js";
 import {
   createUserServices,
@@ -27,10 +28,14 @@ export const createUserController = async (req, res) => {
       password: hassPasword,
     };
     const createUser = await createUserServices(user);
-
+    const token =  generateToken(req.body.email)
     res.status(201).json({
       message: "User Registered sucessfully!",
-      createUser,
+      data: {
+        email: createUser.email,
+        password: createUser.password,
+        token: token 
+      },
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
